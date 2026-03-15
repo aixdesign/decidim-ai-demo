@@ -121,8 +121,8 @@ export default function ContributionFilters({
           <span className="text-sm font-medium text-gray-700">
             {t.contributionFilters.filtersAndSorting}
           </span>
-          {activeCount > 0 && (
-            <span className="px-2 py-0.5 bg-[#0B2E34] text-white text-xs rounded-full font-medium">
+          {activeCount > 0 && !isExpanded && (
+            <span className="px-2 py-0.5 bg-amber-500 text-white text-xs rounded-full font-medium" title="Some contributions are filtered out">
               {activeCount}
             </span>
           )}
