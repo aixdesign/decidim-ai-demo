@@ -184,7 +184,7 @@ export default function ContributionThreadModal({ contribution, onClose, autoFoc
       />
 
       {/* Panel */}
-      <div className="relative w-full max-w-5xl bg-white rounded-2xl shadow-2xl flex flex-col max-h-[80vh]">
+      <div className="relative w-full max-w-5xl bg-white rounded-2xl shadow-2xl flex flex-col min-h-[60vh] max-h-[80vh]">
 
         {/* HEADER */}
         <div className="flex items-center gap-3 px-5 py-4 border-b border-gray-100 flex-shrink-0">
