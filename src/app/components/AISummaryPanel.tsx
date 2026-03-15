@@ -36,31 +36,33 @@ export default function AISummaryPanel({
   return (
     <div className="bg-white rounded-lg border border-gray-200 sticky top-6">
       {/* Header */}
-      <div className="bg-[#0B2E34] p-4 rounded-t-lg">
-        <div className="flex items-center gap-2 text-white">
-          <div className="w-8 h-8 bg-white/10 rounded-full flex items-center justify-center">
-            <Sparkles className="w-5 h-5" />
+      <div className="bg-gray-50 p-3 rounded-t-lg border-b border-gray-200">
+        <div className="flex items-center justify-between gap-3">
+          <div className="flex items-center gap-2 text-gray-700">
+            <div className="w-6 h-6 bg-[#afb5e8]/20 rounded-full flex items-center justify-center">
+              <Sparkles className="w-3.5 h-3.5 text-[#afb5e8]" />
+            </div>
+            <div>
+              <h3 className="text-sm font-medium">AI Summary</h3>
+              <p className="text-xs text-gray-500">Auto-generated insights</p>
+            </div>
           </div>
-          <div>
-            <h3 className="font-semibold">{t.aiSummary.title}</h3>
-            <p className="text-xs opacity-90">{t.aiSummary.subtitle}</p>
+
+          {/* Stats badges */}
+          <div className="flex items-center gap-2">
+            <div className="bg-[#E2E8DE] rounded-full px-3 py-1 flex items-center gap-1.5">
+              <p className="text-sm font-bold text-[#0B2E34]">{participantCount}</p>
+              <p className="text-xs text-[#0B2E34]">Participants</p>
+            </div>
+            <div className="bg-[#CED5D0] rounded-full px-3 py-1 flex items-center gap-1.5">
+              <p className="text-sm font-bold text-[#0c4c27]">{contributionCount}</p>
+              <p className="text-xs text-[#0c4c27]">Contributions</p>
+            </div>
           </div>
         </div>
       </div>
 
       <div className="p-4 space-y-4">
-        {/* Stats */}
-        <div className="grid grid-cols-2 gap-3">
-          <div className="bg-[#E2E8DE] rounded-md p-3 text-center">
-            <p className="text-xl font-bold text-[#0B2E34]">{participantCount}</p>
-            <p className="text-xs text-[#0B2E34]">{t.aiSummary.participantsLabel}</p>
-          </div>
-          <div className="bg-[#CED5D0] rounded-md p-3 text-center">
-            <p className="text-xl font-bold text-[#0c4c27]">{contributionCount}</p>
-            <p className="text-xs text-[#0c4c27]">{t.aiSummary.contributionsLabel}</p>
-          </div>
-        </div>
-
         {/* Overview */}
         <div className="bg-[#F0F3EC] rounded-xl p-4 border border-[#D6DDD1]">
           <div className="flex items-center gap-2 mb-3">
@@ -123,6 +125,6 @@ export default function AISummaryPanel({
           </button>
         </div>
       </div>
-    </div>
+    </div >
   );
 }
