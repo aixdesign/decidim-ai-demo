@@ -51,7 +51,7 @@ export default function DebateDetail() {
   const [contributionModalOpen, setContributionModalOpen] =
     useState(false);
   const [questionsExpanded, setQuestionsExpanded] =
-    useState(true);
+    useState(false);
   const [filtersExpanded, setFiltersExpanded] = useState(false);
 
   if (!debate) {
