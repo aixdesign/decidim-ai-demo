@@ -39,7 +39,7 @@ export default function DebateCard({ debate }: DebateCardProps) {
           </p>
 
           {/* AI Summary Preview */}
-          {debate.aiSummary && (
+          {debate.aiSummary![0] && (
             <div className="bg-[#E2E8DE] p-3 rounded-lg mb-4">
               <div className="flex items-start gap-2">
                 <div className="flex-shrink-0 w-6 h-6 bg-[#0B2E34] rounded-full flex items-center justify-center">
@@ -49,7 +49,7 @@ export default function DebateCard({ debate }: DebateCardProps) {
                 </div>
                 <div className="flex-1">
                   <p className="text-xs font-medium text-[#0B2E34] mb-1">{t.debateCard.aiSummaryLabel}</p>
-                  <p className="text-xs text-gray-700 line-clamp-2">{debate.aiSummary.overview}</p>
+                  <p className="text-xs text-gray-700 line-clamp-2">{debate.aiSummary![0].overview}</p>
                 </div>
               </div>
             </div>

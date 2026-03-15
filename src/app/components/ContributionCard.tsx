@@ -173,7 +173,7 @@ export default function ContributionCard({ contribution }: ContributionCardProps
         title: t.contributionCard.translationTitle,
         body: (
           <p className="text-sm text-gray-700 leading-relaxed italic">
-            {t.contributionCard.aiTranslationPrefix} {contribution.content}
+            {t.contributionCard.aiTranslationPrefix} {contribution.aiTranslation}
           </p>
         ),
       },
@@ -235,7 +235,7 @@ export default function ContributionCard({ contribution }: ContributionCardProps
     setEmojiPickerOpen(false);
   };
 
-  const EMOJI_OPTIONS = ['👍','❤️','🔥','🤔','💡','👏','🌱','😮','😄','🙌','✨','🎉','👀','💪','🫶'];
+  const EMOJI_OPTIONS = ['👍', '❤️', '🔥', '🤔', '💡', '👏', '🌱', '😮', '😄', '🙌', '✨', '🎉', '👀', '💪', '🫶'];
 
   return (
     <>
@@ -365,11 +365,10 @@ export default function ContributionCard({ contribution }: ContributionCardProps
                   <button
                     key={r.emoji}
                     onClick={() => toggleReaction(r.emoji)}
-                    className={`flex items-center gap-0.5 px-1.5 py-0.5 rounded-full text-[10px] font-medium border transition-all ${
-                      myReactions.has(r.emoji)
-                        ? 'bg-[#2b6342] border-[#2b6342] text-white'
-                        : 'bg-gray-50 border-gray-200 text-gray-600 hover:border-[#2b6342]/40 hover:bg-[#f0f3ec]'
-                    }`}
+                    className={`flex items-center gap-0.5 px-1.5 py-0.5 rounded-full text-[10px] font-medium border transition-all ${myReactions.has(r.emoji)
+                      ? 'bg-[#2b6342] border-[#2b6342] text-white'
+                      : 'bg-gray-50 border-gray-200 text-gray-600 hover:border-[#2b6342]/40 hover:bg-[#f0f3ec]'
+                      }`}
                   >
                     <span>{r.emoji}</span>
                     <span>{r.count}</span>
@@ -383,11 +382,10 @@ export default function ContributionCard({ contribution }: ContributionCardProps
               <button
                 onClick={() => setEmojiPickerOpen(o => !o)}
                 title={t.contributionCard.addReactionTitle}
-                className={`flex items-center justify-center w-[26px] h-[18px] rounded-full border text-[10px] transition-all ${
-                  emojiPickerOpen
-                    ? 'bg-[#2b6342] border-[#2b6342] text-white'
-                    : 'bg-gray-50 border-gray-200 text-gray-400 hover:border-[#2b6342]/40 hover:text-[#2b6342] hover:bg-[#f0f3ec]'
-                }`}
+                className={`flex items-center justify-center w-[26px] h-[18px] rounded-full border text-[10px] transition-all ${emojiPickerOpen
+                  ? 'bg-[#2b6342] border-[#2b6342] text-white'
+                  : 'bg-gray-50 border-gray-200 text-gray-400 hover:border-[#2b6342]/40 hover:text-[#2b6342] hover:bg-[#f0f3ec]'
+                  }`}
               >
                 <SmilePlus className="w-3 h-3" />
               </button>
@@ -402,9 +400,8 @@ export default function ContributionCard({ contribution }: ContributionCardProps
                         <button
                           key={emoji}
                           onClick={() => toggleReaction(emoji)}
-                          className={`w-7 h-7 flex items-center justify-center rounded-lg text-base transition-all hover:scale-110 ${
-                            alreadyIn ? 'bg-[#2b6342]/10 ring-1 ring-[#2b6342]/30' : 'hover:bg-gray-100'
-                          }`}
+                          className={`w-7 h-7 flex items-center justify-center rounded-lg text-base transition-all hover:scale-110 ${alreadyIn ? 'bg-[#2b6342]/10 ring-1 ring-[#2b6342]/30' : 'hover:bg-gray-100'
+                            }`}
                         >
                           {emoji}
                         </button>
