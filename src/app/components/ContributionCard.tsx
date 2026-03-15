@@ -4,7 +4,7 @@ import {
   Globe, Sparkles, Flag, Reply, MoreVertical, X, Check, MessageSquare, SmilePlus, ArrowRight
 } from 'lucide-react';
 import { Contribution, Reaction } from '../data/mockData';
-import ContributionModal from './ContributionModal';
+import ContributionThreadModal from './ContributionThreadModal';
 import { t } from '../translations';
 
 interface ContributionCardProps {
@@ -19,7 +19,8 @@ export default function ContributionCard({ contribution }: ContributionCardProps
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeAction, setActiveAction] = useState<MenuAction>(null);
   const [flagged, setFlagged] = useState(false);
-  const [replyModalOpen, setReplyModalOpen] = useState(false);
+  const [threadModalOpen, setThreadModalOpen] = useState(false);
+  const [autoFocusCompose, setAutoFocusCompose] = useState(false);
   const [reactions, setReactions] = useState<Reaction[]>(contribution.reactions ?? []);
   const [myReactions, setMyReactions] = useState<Set<string>>(new Set());
   const [emojiPickerOpen, setEmojiPickerOpen] = useState(false);
@@ -70,7 +71,8 @@ export default function ContributionCard({ contribution }: ContributionCardProps
       return;
     }
     if (action === 'reply') {
-      setReplyModalOpen(true);
+      setThreadModalOpen(true);
+      setAutoFocusCompose(true);
       setMenuOpen(false);
       return;
     }
@@ -91,14 +93,14 @@ export default function ContributionCard({ contribution }: ContributionCardProps
     // Transcript overlay
     if (showTranscript && contribution.aiTranscript) {
       return (
-        <div className="absolute inset-0 z-10 bg-white rounded-xl flex flex-col">
+        <div className="absolute inset-0 z-10 bg-white rounded-xl flex flex-col" onClick={e => e.stopPropagation()}>
           <div className="flex items-center justify-between px-4 pt-4 pb-3 border-b border-gray-100 flex-shrink-0">
             <div className="flex items-center gap-2">
               <Sparkles className="w-4 h-4 text-purple-600" />
               <span className="text-sm font-semibold text-gray-900">{t.contributionCard.aiTranscriptTitle}</span>
             </div>
             <button
-              onClick={() => setShowTranscript(false)}
+              onClick={e => { e.stopPropagation(); setShowTranscript(false); }}
               className="w-6 h-6 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition-colors"
             >
               <X className="w-3.5 h-3.5 text-gray-600" />
@@ -117,7 +119,7 @@ export default function ContributionCard({ contribution }: ContributionCardProps
     if (showReplies) {
       const replies = contribution.replies ?? [];
       return (
-        <div className="absolute inset-0 z-10 bg-white rounded-xl flex flex-col">
+        <div className="absolute inset-0 z-10 bg-white rounded-xl flex flex-col" onClick={e => e.stopPropagation()}>
           <div className="flex items-center justify-between px-4 pt-4 pb-3 border-b border-gray-100 flex-shrink-0">
             <div className="flex items-center gap-2">
               <MessageSquare className="w-4 h-4 text-[#2b6342]" />
@@ -126,7 +128,7 @@ export default function ContributionCard({ contribution }: ContributionCardProps
               </span>
             </div>
             <button
-              onClick={() => setShowReplies(false)}
+              onClick={e => { e.stopPropagation(); setShowReplies(false); }}
               className="w-6 h-6 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition-colors"
             >
               <X className="w-3.5 h-3.5 text-gray-600" />
@@ -154,7 +156,7 @@ export default function ContributionCard({ contribution }: ContributionCardProps
           </div>
           <div className="px-3 pb-3 pt-2 border-t border-gray-100 flex-shrink-0">
             <button
-              onClick={() => { setShowReplies(false); setReplyModalOpen(true); }}
+              onClick={e => { e.stopPropagation(); setShowReplies(false); setThreadModalOpen(true); }}
               className="w-full flex items-center justify-center gap-1.5 py-2 rounded-lg bg-[#2b6342] text-white text-xs font-medium hover:bg-[#0c4c27] transition-colors"
             >
               <span>{t.contributionCard.readFullThread}</span>
@@ -197,11 +199,11 @@ export default function ContributionCard({ contribution }: ContributionCardProps
     if (!content) return null;
 
     return (
-      <div className="absolute inset-0 z-10 bg-white/97 backdrop-blur-sm rounded-xl flex flex-col p-4">
+      <div className="absolute inset-0 z-10 bg-white/97 backdrop-blur-sm rounded-xl flex flex-col p-4" onClick={e => e.stopPropagation()}>
         <div className="flex items-center justify-between mb-3">
           <span className="text-sm font-semibold text-gray-900">{content.title}</span>
           <button
-            onClick={() => setActiveAction(null)}
+            onClick={e => { e.stopPropagation(); setActiveAction(null); }}
             className="w-6 h-6 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition-colors"
           >
             <X className="w-3.5 h-3.5 text-gray-600" />
@@ -241,8 +243,9 @@ export default function ContributionCard({ contribution }: ContributionCardProps
     <>
       {/* Portrait card — golden ratio 1:1.618 */}
       <div
-        className="relative flex flex-col bg-white rounded-xl border border-gray-200 overflow-hidden hover:shadow-lg transition-shadow group"
+        className="relative flex flex-col bg-white rounded-xl border border-gray-200 overflow-hidden hover:shadow-lg transition-shadow group cursor-pointer"
         style={{ aspectRatio: '1 / 1.618' }}
+        onClick={() => setThreadModalOpen(true)}
       >
         {/* Overlay (transcript / replies / actions) */}
         {renderOverlay()}
@@ -260,7 +263,7 @@ export default function ContributionCard({ contribution }: ContributionCardProps
           {contribution.type === 'audio' && (
             <div className="w-full h-full bg-[#E2E8DE] flex flex-col items-center justify-center gap-3 p-4">
               <button
-                onClick={() => setIsPlaying(!isPlaying)}
+                onClick={e => { e.stopPropagation(); setIsPlaying(!isPlaying); }}
                 className="w-14 h-14 rounded-full bg-white shadow-md flex items-center justify-center hover:scale-105 transition-transform"
               >
                 {isPlaying
@@ -333,7 +336,7 @@ export default function ContributionCard({ contribution }: ContributionCardProps
           {/* AI transcript toggle — opens overlay */}
           {contribution.type === 'audio' && contribution.aiTranscript && (
             <button
-              onClick={() => setShowTranscript(true)}
+              onClick={e => { e.stopPropagation(); setShowTranscript(true); }}
               className="flex items-center gap-1 text-[10px] text-purple-600 font-medium mb-2 hover:text-purple-800 flex-shrink-0 w-fit"
             >
               <Sparkles className="w-3 h-3" />
@@ -364,7 +367,7 @@ export default function ContributionCard({ contribution }: ContributionCardProps
                 {reactions.map(r => (
                   <button
                     key={r.emoji}
-                    onClick={() => toggleReaction(r.emoji)}
+                    onClick={e => { e.stopPropagation(); toggleReaction(r.emoji); }}
                     className={`flex items-center gap-0.5 px-1.5 py-0.5 rounded-full text-[10px] font-medium border transition-all ${myReactions.has(r.emoji)
                       ? 'bg-[#2b6342] border-[#2b6342] text-white'
                       : 'bg-gray-50 border-gray-200 text-gray-600 hover:border-[#2b6342]/40 hover:bg-[#f0f3ec]'
@@ -380,7 +383,7 @@ export default function ContributionCard({ contribution }: ContributionCardProps
             {/* Add emoji button + picker */}
             <div ref={emojiPickerRef} className="relative flex-shrink-0">
               <button
-                onClick={() => setEmojiPickerOpen(o => !o)}
+                onClick={e => { e.stopPropagation(); setEmojiPickerOpen(o => !o); }}
                 title={t.contributionCard.addReactionTitle}
                 className={`flex items-center justify-center w-[26px] h-[18px] rounded-full border text-[10px] transition-all ${emojiPickerOpen
                   ? 'bg-[#2b6342] border-[#2b6342] text-white'
@@ -399,7 +402,7 @@ export default function ContributionCard({ contribution }: ContributionCardProps
                       return (
                         <button
                           key={emoji}
-                          onClick={() => toggleReaction(emoji)}
+                          onClick={e => { e.stopPropagation(); toggleReaction(emoji); }}
                           className={`w-7 h-7 flex items-center justify-center rounded-lg text-base transition-all hover:scale-110 ${alreadyIn ? 'bg-[#2b6342]/10 ring-1 ring-[#2b6342]/30' : 'hover:bg-gray-100'
                             }`}
                         >
@@ -415,7 +418,7 @@ export default function ContributionCard({ contribution }: ContributionCardProps
             {/* Reply count badge */}
             {(contribution.replyCount ?? 0) > 0 && (
               <button
-                onClick={() => setShowReplies(true)}
+                onClick={e => { e.stopPropagation(); setShowReplies(true); }}
                 className="flex items-center gap-1 px-1.5 py-0.5 rounded-full text-[10px] font-medium bg-gray-50 border border-gray-200 text-gray-500 hover:border-[#2b6342]/40 hover:text-[#2b6342] hover:bg-[#f0f3ec] transition-all flex-shrink-0"
               >
                 <MessageSquare className="w-2.5 h-2.5" />
@@ -426,7 +429,7 @@ export default function ContributionCard({ contribution }: ContributionCardProps
             {/* Context menu */}
             <div ref={menuRef} className="relative flex-shrink-0 ml-auto">
               <button
-                onClick={() => setMenuOpen(o => !o)}
+                onClick={e => { e.stopPropagation(); setMenuOpen(o => !o); }}
                 className="w-7 h-7 rounded-full flex items-center justify-center text-gray-400 hover:bg-gray-100 hover:text-gray-700 transition-colors"
                 aria-label={t.contributionCard.menuAriaLabel}
               >
@@ -438,7 +441,7 @@ export default function ContributionCard({ contribution }: ContributionCardProps
                   {menuItems.map((item) => (
                     <button
                       key={item.key}
-                      onClick={() => handleMenuAction(item.key)}
+                      onClick={e => { e.stopPropagation(); handleMenuAction(item.key); }}
                       className={`w-full flex items-center gap-2.5 px-4 py-2.5 text-sm hover:bg-gray-50 transition-colors ${item.color}`}
                     >
                       {item.icon}
@@ -455,12 +458,11 @@ export default function ContributionCard({ contribution }: ContributionCardProps
         </div>
       </div>
 
-      {/* Reply modal */}
-      <ContributionModal
-        isOpen={replyModalOpen}
-        onClose={() => setReplyModalOpen(false)}
-        mode="reply"
-        replyTo={contribution.author}
+      {/* Thread modal */}
+      <ContributionThreadModal
+        contribution={threadModalOpen ? contribution : null}
+        onClose={() => { setThreadModalOpen(false); setAutoFocusCompose(false); }}
+        autoFocusCompose={autoFocusCompose}
       />
     </>
   );

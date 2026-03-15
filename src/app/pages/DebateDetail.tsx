@@ -18,6 +18,8 @@ import { mockDebates } from "../data/mockData";
 import imgBackground from "@/assets/imgBackground.png";
 import { t } from "../translations";
 
+const DESCRIPTION_PREVIEW_LENGTH = 300;
+
 const DEFAULT_FILTERS: FilterState = {
   mediaType: "all",
   date: "all",
@@ -53,6 +55,7 @@ export default function DebateDetail() {
   const [questionsExpanded, setQuestionsExpanded] =
     useState(false);
   const [filtersExpanded, setFiltersExpanded] = useState(false);
+  const [descExpanded, setDescExpanded] = useState(false);
 
   if (!debate) {
     return (
@@ -195,9 +198,21 @@ export default function DebateDetail() {
               </h1>
 
               {/* Description */}
-              <p className="text-[#3e4c5c] mb-6 leading-relaxed">
-                {debate.description}
-              </p>
+              <div className="mb-6">
+                <p className="text-[#3e4c5c] leading-relaxed">
+                  {descExpanded || debate.description.length <= DESCRIPTION_PREVIEW_LENGTH
+                    ? debate.description
+                    : debate.description.slice(0, DESCRIPTION_PREVIEW_LENGTH) + "…"}
+                </p>
+                {debate.description.length > DESCRIPTION_PREVIEW_LENGTH && (
+                  <button
+                    onClick={() => setDescExpanded((v) => !v)}
+                    className="mt-2 text-sm text-[#3e6c4c] hover:underline font-medium"
+                  >
+                    {descExpanded ? "Read less" : "Read more"}
+                  </button>
+                )}
+              </div>
 
               {/* Meta Info */}
               <div className="flex items-center gap-6 text-sm text-[#3e4c5c] pt-6 border-t border-gray-200">
