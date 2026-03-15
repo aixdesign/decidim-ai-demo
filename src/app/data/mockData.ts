@@ -39,12 +39,12 @@ export interface Debate {
   endDate?: string;
   tags: string[];
   contributions: Contribution[];
-  aiSummary?: {
+  aiSummary?: Array<{
     overview: string;
     keyPoints: string[];
     topics: string[];
     lastUpdated: string;
-  };
+  }>;
   aiQuestions?: string[];
 }
 
@@ -288,19 +288,32 @@ export const mockDebates: Debate[] = [
         ],
       },
     ],
-    aiSummary: {
-      overview: "Carlos Codina Mellado proposes distributing self-installable 5 kWh home batteries for under €1,500 so that any member — with or without solar panels — can shift consumption to off-peak hours. The cooperative could import batteries directly from China, offer them at cost price with a loyalty incentive similar to GenerationkWh, and aggregate the installed capacity to participate in flexibility markets. Members have responded very positively to the idea, raising technical questions about compatibility with existing inverters, outdoor installation, and scalability to 10 kWh.",
-      keyPoints: [
-        "Plug-in 5 kWh battery, no construction work required, compatible with any inverter",
-        "Target price ~€1,000 by importing from China, with no cooperative markup",
-        "Loyalty mechanism: €1,500 with €500 refunded over 10 years (similar to GenerationkWh)",
-        'Aggregating batteries to create a "super- battery" and enter flexibility markets',
-        "Assisted installation via local groups and instructional videos, no professional installer needed",
-        "Pending: serious profitability study without photovoltaic panels and automation of scheduling",
-      ],
-      topics: ['Energy storage', 'Self-supply', 'Grid flexibility', 'Cooperative economics', 'Energy transition'],
-      lastUpdated: '2026-03-03T00:08:00',
-    },
+    aiSummary: [
+      {
+        overview: "Carlos Codina Mellado proposes distributing self-installable 5 kWh home batteries for under €1,500, allowing members to shift consumption to off-peak hours. The cooperative would import directly from China, offer them at cost with a loyalty incentive, and aggregate capacity for flexibility markets. Members are enthusiastic but have raised questions about inverter compatibility and scalability to 10 kWh.",
+        keyPoints: [
+          "Plug-in 5 kWh battery, no construction work required, compatible with any inverter",
+          "Target price ~€1,000 by importing from China, with no cooperative markup",
+          "Loyalty mechanism: €1,500 with €500 refunded over 10 years (similar to GenerationkWh)",
+          'Aggregating batteries to create a "super-battery" and enter flexibility markets',
+          "Assisted installation via local groups and instructional videos, no professional installer needed",
+          "Pending: serious profitability study without photovoltaic panels and automation of scheduling",
+        ],
+        topics: ['Energy storage', 'Self-supply', 'Grid flexibility', 'Cooperative economics', 'Energy transition'],
+        lastUpdated: '2026-03-03T00:08:00',
+      },
+      {
+        overview: "Citizens have highlighted the need for accessible, low-cost energy storage solutions as a key enabler for the energy transition. The discussion centers on how distributed battery systems could reduce reliance on fossil fuels while empowering households to manage their own energy consumption.",
+        keyPoints: [
+          "Distributed storage could reduce peak grid demand by up to 30%",
+          "Community-based purchasing could lower individual unit costs significantly",
+          "Integration with existing solar installations is a top priority for participants",
+          "Regulatory clarity on grid connection standards is seen as a critical blocker",
+        ],
+        topics: ['Distributed energy', 'Battery storage', 'Energy transition', 'Grid stability'],
+        lastUpdated: '2026-03-03T09:15:00',
+      },
+    ],
     aiQuestions: [
       'How can the compatibility of these batteries with all existing types of photovoltaic installations be guaranteed?',
       'What alternative financing strategies could we offer to facilitate the acquisition of batteries for members with fewer resources?',
@@ -392,18 +405,32 @@ export const mockDebates: Debate[] = [
         ],
       },
     ],
-    aiSummary: {
-      overview: 'Els socis demanen més eines i transparència al voltant de la tarifa indexada. Les principals propostes són: un simulador de costos que compari tarifes usant dades reals de consum, comunicacions mensuals explicant el comportament del mercat horari, i la possibilitat de canviar de tarifa des del portal del soci de forma immediata. Hi ha consens en que la complexitat actual desincentiva l\'adopció de la tarifa indexada, que podria ser molt beneficiosa per als perfils amb consum flexible.',
-      keyPoints: [
-        'Simulador de costos amb dades reals importades del portal del soci',
-        'Butlletí mensual explicant el mercat horari i el resultat de la tarifa',
-        'Canvi de tarifa autogestionat des del portal sense trucades',
-        'Integració de variables com bateria i solar en la recomanació de tarifa',
-        'Possibilitat de canvi automàtic basat en previsió de preus horaris',
-      ],
-      topics: ['Tarifa indexada', 'Portal del soci', 'Mercat elèctric', 'Autogestió', 'Transparència'],
-      lastUpdated: '2026-01-16T15:45:00',
-    },
+    aiSummary: [
+      {
+        overview: 'Els socis demanen més eines i transparència al voltant de la tarifa indexada. Les principals propostes són: un simulador de costos que compari tarifes usant dades reals de consum, comunicacions mensuals explicant el comportament del mercat horari, i la possibilitat de canviar de tarifa des del portal del soci de forma immediata. Hi ha consens en que la complexitat actual desincentiva l\'adopció de la tarifa indexada, que podria ser molt beneficiosa per als perfils amb consum flexible.',
+        keyPoints: [
+          'Simulador de costos amb dades reals importades del portal del soci',
+          'Butlletí mensual explicant el mercat horari i el resultat de la tarifa',
+          'Canvi de tarifa autogestionat des del portal sense trucades',
+          'Integració de variables com bateria i solar en la recomanació de tarifa',
+          'Possibilitat de canvi automàtic basat en previsió de preus horaris',
+        ],
+        topics: ['Tarifa indexada', 'Portal del soci', 'Mercat elèctric', 'Autogestió', 'Transparència'],
+        lastUpdated: '2026-01-16T15:45:00',
+      },
+      {
+        overview: 'El debat evidencia que molts socis no entenen la diferència real de cost entre la tarifa fixa i la indexada en el seu cas concret. Es valora molt la idea d\'una eina personalitzada que, a partir del perfil de consum del soci, recomanés la tarifa òptima i calculés l\'estalvi potencial. La flexibilitat horària del consum emergeix com a factor clau per aprofitar la tarifa indexada.',
+        keyPoints: [
+          'Eina de recomanació personalitzada basada en el perfil de consum individual',
+          'Visualització clara de les hores vall i punta per optimitzar el consum',
+          'Notificacions en temps real quan el preu de l\'electricitat és especialment baix',
+          'Formació i acompanyament per a socis amb menys coneixements digitals',
+          'Comparativa mensual automàtica: cost real vs. cost hipotètic amb tarifa fixa',
+        ],
+        topics: ['Educació energètica', 'Personalització', 'Eficiència de consum', 'Digitalització'],
+        lastUpdated: '2026-01-17T10:30:00',
+      },
+    ],
   },
   {
     id: '3',
@@ -510,19 +537,33 @@ export const mockDebates: Debate[] = [
         ],
       },
     ],
-    aiSummary: {
-      overview: 'Debat profund sobre com estructurar les comunitats energètiques locals (CEL) de Som Energia de manera que siguin democràtiques, financerament sostenibles i socialment inclusives. S\'han plantejat models de governança en múltiples capes (ajuntament, cooperativa, veïns, entitats socials), mecanismes per garantir la participació de famílies sense recursos i sistemes de repartiment de beneficis basats en consum i no sols en inversió. El debat es troba en fase de deliberació amb molts punts per concretar.',
-      keyPoints: [
-        'Model de governança en tres o quatre capes amb el 51% de vot econòmic per als veïns',
-        'Som Energia hauria d\'establir mínims de governança per a totes les CEL que impulsi',
-        'Participació sense aportació inicial per a famílies en risc de pobresa energètica',
-        'Fons de solidaritat nutrit amb un percentatge dels beneficis de la CEL',
-        'Repartiment de beneficis proporcional al consum, no sols a la inversió',
-        'Col·laboració amb serveis socials municipals per a la identificació de famílies vulnerables',
-      ],
-      topics: ['Comunitats energètiques', 'Inclusió social', 'Governança democràtica', 'Pobresa energètica', 'Repartiment de beneficis'],
-      lastUpdated: '2025-11-16T14:00:00',
-    },
+    aiSummary: [
+      {
+        overview: 'Debat profund sobre com estructurar les comunitats energètiques locals (CEL) de Som Energia de manera que siguin democràtiques, financerament sostenibles i socialment inclusives. S\'han plantejat models de governança en múltiples capes (ajuntament, cooperativa, veïns, entitats socials), mecanismes per garantir la participació de famílies sense recursos i sistemes de repartiment de beneficis basats en consum i no sols en inversió. El debat es troba en fase de deliberació amb molts punts per concretar.',
+        keyPoints: [
+          'Model de governança en tres o quatre capes amb el 51% de vot econòmic per als veïns',
+          'Som Energia hauria d\'establir mínims de governança per a totes les CEL que impulsi',
+          'Participació sense aportació inicial per a famílies en risc de pobresa energètica',
+          'Fons de solidaritat nutrit amb un percentatge dels beneficis de la CEL',
+          'Repartiment de beneficis proporcional al consum, no sols a la inversió',
+          'Col·laboració amb serveis socials municipals per a la identificació de famílies vulnerables',
+        ],
+        topics: ['Comunitats energètiques', 'Inclusió social', 'Governança democràtica', 'Pobresa energètica', 'Repartiment de beneficis'],
+        lastUpdated: '2025-11-16T14:00:00',
+      },
+      {
+        overview: 'Els participants subratllen que l\'èxit de les CEL depèn tant del model tècnic com de la capacitat de construir confiança entre veïns, ajuntaments i la cooperativa. Es debat la necessitat d\'una figura de facilitador comunitari remunerada per Som Energia que acompanyi cada CEL durant els seus primers anys de vida i asseguri la participació activa dels membres.',
+        keyPoints: [
+          'Figura de facilitador comunitari com a peça clau per a l\'èxit de les CEL',
+          'Procés participatiu per definir les regles de la CEL abans de la seva constitució formal',
+          'Plataforma digital pròpia de Som Energia per a la gestió i seguiment de les CEL',
+          'Indicadors de salut democràtica: quòrum mínim, rotació de càrrecs, transparència econòmica',
+          'Vinculació de les CEL a objectius de reducció de pobresa energètica al municipi',
+        ],
+        topics: ['Facilitació comunitària', 'Participació ciutadana', 'Plataforma digital', 'Democràcia energètica'],
+        lastUpdated: '2025-11-17T09:00:00',
+      },
+    ],
     aiQuestions: [
       'How could we ensure that the proposed governance model is accepted by all stakeholders involved?',
       'What measures could we take to ensure that the distribution of benefits is fair and transparent for all CEL members?',
