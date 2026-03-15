@@ -13,12 +13,14 @@ interface AISummaryPanelProps {
   summary: SummaryEntry[];
   participantCount: number;
   contributionCount: number;
+  onTopicClick?: (topic: string) => void;
 }
 
 export default function AISummaryPanel({
   summary,
   participantCount,
-  contributionCount
+  contributionCount,
+  onTopicClick,
 }: AISummaryPanelProps) {
   const [summaryIndex, setSummaryIndex] = useState(0);
   const activeSummary = summary[summaryIndex];
@@ -94,12 +96,13 @@ export default function AISummaryPanel({
           <h4 className="font-semibold text-gray-900 mb-2">{t.aiSummary.detectedTopicsTitle}</h4>
           <div className="flex flex-wrap gap-2">
             {activeSummary.topics.map((topic, index) => (
-              <span
+              <button
                 key={index}
-                className="px-3 py-1 text-xs rounded-full bg-[#CED5D0] text-[#0B2E34] font-medium border border-[#CED5D0]"
+                onClick={() => onTopicClick?.(topic)}
+                className={`px-3 py-1 text-xs rounded-full bg-[#CED5D0] text-[#0B2E34] font-medium border border-[#CED5D0] transition-all ${onTopicClick ? 'hover:bg-[#0B2E34] hover:text-white hover:border-[#0B2E34] cursor-pointer' : 'cursor-default'}`}
               >
                 {topic}
-              </span>
+              </button>
             ))}
           </div>
         </div>

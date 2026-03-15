@@ -52,6 +52,7 @@ export default function DebateDetail() {
     useState(false);
   const [questionsExpanded, setQuestionsExpanded] =
     useState(true);
+  const [filtersExpanded, setFiltersExpanded] = useState(false);
 
   if (!debate) {
     return (
@@ -209,10 +210,10 @@ export default function DebateDetail() {
                 <div className="flex items-center gap-2">
                   <div
                     className={`w-2 h-2 rounded-full ${debate.status === "open"
-                        ? "bg-green-500"
-                        : debate.status === "deliberation"
-                          ? "bg-yellow-500"
-                          : "bg-gray-500"
+                      ? "bg-green-500"
+                      : debate.status === "deliberation"
+                        ? "bg-yellow-500"
+                        : "bg-gray-500"
                       }`}
                   />
                   <span className="capitalize">
@@ -230,10 +231,10 @@ export default function DebateDetail() {
                     onClick={() =>
                       setQuestionsExpanded(!questionsExpanded)
                     }
-                    className="w-full flex items-center gap-2 p-6 hover:bg-white/50 transition-colors text-left"
+                    className="w-full flex items-center gap-2 p-4 hover:bg-white/50 transition-colors text-left"
                   >
                     <Sparkles className="w-5 h-5 text-[#afb5e8]" />
-                    <h2 className="text-lg font-medium text-[#020203]">
+                    <h2 className="text-sm font-medium text-[#020203]">
                       {t.debateDetail.suggestedQuestionsTitle}
                     </h2>
                     <span className="px-2 py-0.5 text-xs bg-[#afb5e8]/20 text-[#0B2E34] rounded-full font-medium">
@@ -285,6 +286,8 @@ export default function DebateDetail() {
               availableEmojis={availableEmojis}
               resultCount={filteredContributions.length}
               totalCount={debate.contributions.length}
+              isExpanded={filtersExpanded}
+              onExpandedChange={setFiltersExpanded}
             />
 
             {/* Contributions */}
@@ -332,6 +335,10 @@ export default function DebateDetail() {
                 summary={debate.aiSummary}
                 participantCount={debate.participantCount}
                 contributionCount={debate.contributionCount}
+                onTopicClick={(topic) => {
+                  setFilters(f => ({ ...f, search: topic }));
+                  setFiltersExpanded(true);
+                }}
               />
             )}
           </div>

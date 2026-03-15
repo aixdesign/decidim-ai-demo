@@ -28,6 +28,8 @@ interface ContributionFiltersProps {
   availableEmojis: string[];
   resultCount: number;
   totalCount: number;
+  isExpanded?: boolean;
+  onExpandedChange?: (expanded: boolean) => void;
 }
 
 const MEDIA_TYPES: { value: MediaTypeFilter; label: string; icon: React.ReactNode }[] = [
@@ -83,8 +85,15 @@ export default function ContributionFilters({
   availableEmojis,
   resultCount,
   totalCount,
+  isExpanded: isExpandedProp,
+  onExpandedChange,
 }: ContributionFiltersProps) {
-  const [isExpanded, setIsExpanded] = useState(false);
+  const [isExpandedInternal, setIsExpandedInternal] = useState(false);
+  const isExpanded = isExpandedProp !== undefined ? isExpandedProp : isExpandedInternal;
+  const setIsExpanded = (value: boolean) => {
+    setIsExpandedInternal(value);
+    onExpandedChange?.(value);
+  };
 
   const set = (patch: Partial<FilterState>) => onChange({ ...filters, ...patch });
 
